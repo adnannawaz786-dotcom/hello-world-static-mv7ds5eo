@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple Hello World static website with modern design">
+    <meta name="author" content="Hello World Static">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Background elements for visual enhancement -->
+    <div class="background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+    </div>
+
+    <!-- Main container -->
+    <main class="container">
+        <!-- Header section -->
+        <header class="header" role="banner">
+            <div class="logo">
+                <span class="logo-text">HW</span>
+            </div>
+        </header>
+
+        <!-- Hero section -->
+        <section class="hero" role="main">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">Hello</span>
+                    <span class="title-line title-accent">World</span>
+                </h1>
+                
+                <p class="hero-description">
+                    Welcome to a beautifully crafted static website. 
+                    Simple, elegant, and built with modern web standards.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showWelcome()">
+                        Get Started
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToInfo()">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <!-- Animated greeting display -->
+            <div class="greeting-display" id="greetingDisplay">
+                <div class="greeting-content">
+                    <span class="greeting-emoji">👋</span>
+                    <span class="greeting-text">Hello there!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info section -->
+        <section class="info-section" id="infoSection">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Fast & Modern</h3>
+                    <p>Built with performance and modern web standards in mind.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">📱</div>
+                    <h3>Responsive</h3>
+                    <p>Perfectly optimized for all devices and screen sizes.</p>
+                </div>
+                
+                <div class="info-card">
+                    <div class="card-icon">♿</div>
+                    <h3>Accessible</h3>
+                    <p>Designed with accessibility and usability best practices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <p>&copy; 2024 Hello World Static. Made with ❤️</p>
+            <div class="footer-links">
+                <button class="footer-link" onclick="resetGreeting()">Reset</button>
+                <button class="footer-link" onclick="toggleTheme()">Toggle Theme</button>
+            </div>
+        </footer>
+    </main>
+
+    <!-- JavaScript for interactivity -->
+    <script>
+        // Greeting functionality
+        function showWelcome() {
+            const display = document.getElementById('greetingDisplay');
+            const greetings = [
+                { emoji: '👋', text: 'Hello there!' },
+                { emoji: '🌟', text: 'Welcome!' },
+                { emoji: '🎉', text: 'Great to see you!' },
+                { emoji: '✨', text: 'How wonderful!' }
+            ];
+            
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            
+            const emoji = display.querySelector('.greeting-emoji');
+            const text = display.querySelector('.greeting-text');
+            
+            emoji.textContent = randomGreeting.emoji;
+            text.textContent = randomGreeting.text;
+            
+            display.classList.add('active');
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                display.classList.remove('active');
+            }, 3000);
+        }
+
+        // Smooth scroll to info section
+        function scrollToInfo() {
+            const infoSection = document.getElementById('infoSection');
+            infoSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Reset greeting display
+        function resetGreeting() {
+            const display = document.getElementById('greetingDisplay');
+            display.classList.remove('active');
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            
+            // Save theme preference
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Load saved theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+
+            // Add entrance animation
+            document.body.classList.add('loaded');
+
+            // Keyboard accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    if (e.target.classList.contains('btn') || e.target.classList.contains('footer-link')) {
+                        e.preventDefault();
+                        e.target.click();
+                    }
+                }
+            });
+        });
+
+        // Add floating animation to shapes
+        function animateShapes() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                const delay = index * 500;
+                const duration = 3000 + (index * 1000);
+                
+                setTimeout(() => {
+                    shape.style.animationDuration = duration + 'ms';
+                }, delay);
+            });
+        }
+
+        // Initialize animations
+        window.addEventListener('load', animateShapes);
+    </script>
+</body>
+</html>
